@@ -1,4 +1,8 @@
-from dao.model.director import Director
+from dao.model.director import Director, DirectorSchema
+
+
+
+directors = DirectorSchema()
 
 
 class DirectorDAO:
@@ -6,16 +10,16 @@ class DirectorDAO:
         self.session = session
 
     def get_one(self, bid):
-        return self.session.query(Director).get(bid)
+        return directors.dump(self.session.query(Director).get(bid))
 
     def get_all(self):
-        return self.session.query(Director).all()
+        return directors.dump(self.session.query(Director).all())
 
     def create(self, director_d):
         ent = Director(**director_d)
         self.session.add(ent)
         self.session.commit()
-        return ent
+        return ""
 
     def delete(self, rid):
         director = self.get_one(rid)

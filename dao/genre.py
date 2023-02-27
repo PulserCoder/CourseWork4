@@ -1,21 +1,23 @@
-from dao.model.genre import Genre
+from dao.model.genre import Genre, GenreSchema
 
+
+genres_schema = GenreSchema()
 
 class GenreDAO:
     def __init__(self, session):
         self.session = session
 
     def get_one(self, bid):
-        return self.session.query(Genre).get(bid)
+        return genres_schema.dump(self.session.query(Genre).get(bid))
 
     def get_all(self):
-        return self.session.query(Genre).all()
+        return genres_schema.dump(self.session.query(Genre).all())
 
     def create(self, genre_d):
         ent = Genre(**genre_d)
         self.session.add(ent)
         self.session.commit()
-        return ent
+        return ""
 
     def delete(self, rid):
         genre = self.get_one(rid)
