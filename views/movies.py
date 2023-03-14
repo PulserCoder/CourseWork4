@@ -11,15 +11,19 @@ movie_ns = Namespace('movies')
 
 @movie_ns.route('/')
 class MoviesView(Resource):
-    @auth_required
+    #@auth_required
     def get(self):
+        page = request.args.get('page')
         director = request.args.get("director_id")
         genre = request.args.get("genre_id")
         year = request.args.get("year")
+        status = request.args.get("status")
         filters = {
             "director_id": director,
             "genre_id": genre,
             "year": year,
+            "page": page,
+            "status": status
         }
         all_movies = movie_service.get_all(filters)
         res = MovieSchema(many=True).dump(all_movies)
@@ -34,7 +38,7 @@ class MoviesView(Resource):
 
 @movie_ns.route('/<int:bid>')
 class MovieView(Resource):
-    @auth_required
+    #@auth_required
     def get(self, bid):
         b = movie_service.get_one(bid)
         sm_d = MovieSchema().dump(b)

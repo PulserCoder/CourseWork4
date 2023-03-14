@@ -1,8 +1,8 @@
 from dao.model.director import Director, DirectorSchema
 
 
-
-directors = DirectorSchema()
+director = DirectorSchema()
+directors = DirectorSchema(many=True)
 
 
 class DirectorDAO:
@@ -10,7 +10,7 @@ class DirectorDAO:
         self.session = session
 
     def get_one(self, bid):
-        return directors.dump(self.session.query(Director).get(bid))
+        return director.dump(self.session.query(Director).get(bid))
 
     def get_all(self):
         return directors.dump(self.session.query(Director).all())

@@ -1,17 +1,17 @@
 from dao.model.genre import Genre, GenreSchema
 
-
-genres_schema = GenreSchema()
+genre_schema = GenreSchema()
+genres_schema = GenreSchema(many=True)
 
 class GenreDAO:
     def __init__(self, session):
         self.session = session
 
     def get_one(self, bid):
-        return genres_schema.dump(self.session.query(Genre).get(bid))
+        return genre_schema.dump(Genre.query.get(bid))
 
     def get_all(self):
-        return genres_schema.dump(self.session.query(Genre).all())
+        return genres_schema.dump(Genre.query.all())
 
     def create(self, genre_d):
         ent = Genre(**genre_d)
