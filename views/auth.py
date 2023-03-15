@@ -61,7 +61,7 @@ class Authorization(Resource):
 
 
 
-@auth_ns.route('/register')
+@auth_ns.route('/register/')
 class Registration(Resource):
     def post(self):
         print(1)
@@ -78,7 +78,7 @@ class Registration(Resource):
 
 
 
-@auth_ns.route('/login')
+@auth_ns.route('/login/')
 class Login(Resource):
     def post(self):
         data = request.json
@@ -86,7 +86,7 @@ class Login(Resource):
         password = data.get("password")
         if None in (email, password):
             abort(401)
-        user = User.query.filter(email == email).one()
+        user = User.query.filter(User.email == email).one()
         try_pass = hashlib.pbkdf2_hmac(
             'sha256',
             password.encode('utf-8'),

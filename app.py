@@ -1,11 +1,12 @@
 from flask import Flask
 from flask_restx import Api
-from dao.model.user import User
+from flask_cors import CORS
 from config import Config
 from setup_db import db
 from views.directors import director_ns
 from views.genres import genre_ns
 from views.movies import movie_ns
+from views.user import us_ns
 from views.users import user_ns
 from views.auth import auth_ns
 
@@ -24,6 +25,7 @@ def register_extensions(app):
     api.add_namespace(movie_ns)
     api.add_namespace(user_ns)
     api.add_namespace(auth_ns)
+    api.add_namespace(us_ns)
 
 def create_data(app, db):
     with app.app_context():
@@ -31,6 +33,7 @@ def create_data(app, db):
 
 
 app = create_app(Config())
+CORS(app)
 app.debug = True
 create_data(app, db)
 if __name__ == '__main__':

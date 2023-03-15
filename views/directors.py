@@ -19,7 +19,7 @@ class DirectorsView(Resource):
         return director_service.create(request.json)
 
 
-@director_ns.route('/<int:rid>')
+@director_ns.route('/<int:rid>/')
 class DirectorView(Resource):
     def get(self, rid):
         r = director_service.get_one(rid)

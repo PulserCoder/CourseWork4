@@ -6,9 +6,10 @@ def auth_required(func):
         if 'Authorization' not in request.headers:
             abort(401)
         try:
+            print(1)
             token = request.headers['Authorization'].split('Bearer ')[-1]
             data = jwt.decode(token, Config.secret, algorithms=[Config.algo])
-            return func(*args, **kwargs)
+            return func(*args)
         except Exception:
             abort(401)
     return wrapper
@@ -29,3 +30,4 @@ def admin_required(func):
             raise
 
     return wrapper
+

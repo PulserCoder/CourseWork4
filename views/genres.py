@@ -22,7 +22,7 @@ class GenresView(Resource):
         return genre_service.create(request.json)
 
 
-@genre_ns.route('/<int:rid>')
+@genre_ns.route('/<int:rid>/')
 class GenreView(Resource):
     def get(self, rid):
         r = genre_service.get_one(rid)
